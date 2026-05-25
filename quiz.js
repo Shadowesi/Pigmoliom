@@ -72,41 +72,36 @@ var answered = false;
 
 function render() {
   var q = questions[current];
-  var qCounter = document.getElementById('q-counter');
-  var qNum = document.getElementById('q-num');
-  var qText = document.getElementById('q-text');
-  var qBar = document.getElementById('q-bar');
-  var qFeedback = document.getElementById('q-feedback');
-  var btnNext = document.getElementById('btn-next');
+  var total = questions.length;
 
-  if (qCounter) qCounter.textContent = (current + 1) + ' / 10';
-  if (qNum) qNum.textContent = (current + 1) + '. kérdés';
-  if (qText) qText.textContent = q.q;
-  if (qBar) qBar.style.width = ((current + 1) * 10) + '%';
-  if (qFeedback) {
-    qFeedback.textContent = '';
-    qFeedback.style.color = '#a09070';
-  }
-  if (btnNext) btnNext.classList.add('hidden');
+  document.getElementById('q-counter').textContent = (current + 1) + ' / ' + total;
+  document.getElementById('q-num').textContent = (current + 1) + '. kérdés';
+  document.getElementById('q-text').textContent = q.q;
+  document.getElementById('q-bar').style.width = ((current + 1) / total * 100) + '%';
+
+  var fb = document.getElementById('q-feedback');
+  fb.textContent = '';
+  fb.style.color = '#a09070';
+
+  document.getElementById('btn-next').classList.add('hidden');
   answered = false;
 
   var optsEl = document.getElementById('q-options');
-  if (optsEl) {
-    optsEl.innerHTML = '';
-    for (var i = 0; i < q.options.length; i++) {
-      var btn = document.createElement('button');
-      btn.className = 'opt';
-      btn.textContent = q.options[i];
-      btn.setAttribute('data-idx', i);
-      btn.onclick = handleClick;
-      optsEl.appendChild(btn);
-    }
+  optsEl.innerHTML = '';
+  for (var i = 0; i < q.options.length; i++) {
+    var btn = document.createElement('button');
+    btn.className = 'opt';
+    btn.textContent = q.options[i];
+    btn.setAttribute('data-idx', i);
+    btn.addEventListener('click', handleClick);
+    optsEl.appendChild(btn);
   }
 }
 
 function handleClick(e) {
   if (answered) return;
   answered = true;
+
   var idx = parseInt(e.currentTarget.getAttribute('data-idx'));
   var q = questions[current];
   var btns = document.querySelectorAll('.opt');
@@ -121,54 +116,31 @@ function handleClick(e) {
     btns[idx].classList.remove('show-ok');
     btns[idx].classList.add('correct');
     score++;
-    var qScore = document.getElementById('q-score');
-    if (qScore) qScore.textContent = score + ' pont';
-    if (fb) {
-      fb.style.color = '#7dca7d';
-      fb.textContent = 'Helyes! — ' + q.exp;
-    }
+    document.getElementById('q-score').textContent = score + ' pont';
+    fb.style.color = '#7dca7d';
+    fb.textContent = 'Helyes! — ' + q.exp;
   } else {
     btns[idx].classList.add('wrong');
-    if (fb) {
-      fb.style.color = '#d07070';
-      fb.textContent = 'Nem jó. — ' + q.exp;
-    }
+    fb.style.color = '#d07070';
+    fb.textContent = 'Nem jó. — ' + q.exp;
   }
 
-  var btn = document.getElementById('btn-next');
-  if (btn) {
-    btn.classList.remove('hidden');
-    btn.textContent = current < 9 ? 'Következő →' : 'Eredmény →';
-  }
-}
-
-var btnNext = document.getElementById('btn-next');
-if (btnNext) {
-  btnNext.onclick = function() {
-    current++;
-    if (current < questions.length) {
-      render();
-    } else {
-      showResult();
-    }
-  };
+  var nextBtn = document.getElementById('btn-next');
+  nextBtn.classList.remove('hidden');
+  nextBtn.textContent = current < questions.length - 1 ? 'Következő →' : 'Eredmény →';
 }
 
 function showResult() {
-  var quizUi = document.getElementById('quiz-ui');
-  var quizResult = document.getElementById('quiz-result');
-  var finalScore = document.getElementById('final-score');
-  var resultMsg = document.getElementById('result-msg');
-
-  if (quizUi) quizUi.style.display = 'none';
-  if (quizResult) quizResult.classList.remove('hidden');
-  if (finalScore) finalScore.textContent = score + '/10';
+  document.getElementById('quiz-ui').style.display = 'none';
+  var resultEl = document.getElementById('quiz-result');
+  resultEl.classList.remove('hidden');
+  document.getElementById('final-score').textContent = score + '/' + questions.length;
 
   var msgs = [
-    [0, 3, "A márványszobor még nem árulta el titkait... Próbáld újra!"],
-    [4, 5, "Jó kezdet! Pygmalion szeretné, ha mélyebbre ásnál."],
-    [6, 7, "Szép teljesítmény — a szobor formát ölt kezeid közt!"],
-    [8, 9, "Kiváló! Aphrodité maga is elégedett lenne."],
+    [0,  3,  "A márványszobor még nem árulta el titkait... Próbáld újra!"],
+    [4,  5,  "Jó kezdet! Pygmalion szeretné, ha mélyebbre ásnál."],
+    [6,  7,  "Szép teljesítmény — a szobor formát ölt kezeid közt!"],
+    [8,  9,  "Kiváló! Aphrodité maga is elégedett lenne."],
     [10, 10, "Tökéletes! Galatea is büszke lenne rád!"]
   ];
 
@@ -176,22 +148,28 @@ function showResult() {
   for (var i = 0; i < msgs.length; i++) {
     if (score >= msgs[i][0] && score <= msgs[i][1]) { msg = msgs[i][2]; break; }
   }
-  if (resultMsg) resultMsg.textContent = msg;
+  document.getElementById('result-msg').textContent = msg;
 }
 
 function restartQuiz() {
-  current = 0; score = 0; answered = false;
-  var qScore = document.getElementById('q-score');
-  var quizUi = document.getElementById('quiz-ui');
-  var quizResult = document.getElementById('quiz-result');
-
-  if (qScore) qScore.textContent = '0 pont';
-  if (quizUi) quizUi.style.display = 'block';
-  if (quizResult) quizResult.classList.add('hidden');
+  current = 0;
+  score = 0;
+  answered = false;
+  document.getElementById('q-score').textContent = '0 pont';
+  document.getElementById('quiz-ui').style.display = 'block';
+  document.getElementById('quiz-result').classList.add('hidden');
   render();
 }
 
-// Запуск при завантаженні сторінки
-window.onload = function() {
+// Init
+document.addEventListener('DOMContentLoaded', function () {
+  document.getElementById('btn-next').addEventListener('click', function () {
+    current++;
+    if (current < questions.length) {
+      render();
+    } else {
+      showResult();
+    }
+  });
   render();
-};
+});
