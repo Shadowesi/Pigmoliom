@@ -1,8 +1,5 @@
-/* ── RESET & BASE ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 html { scroll-behavior: smooth; }
-
 body {
   background: #111;
   color: #f0ead8;
@@ -11,7 +8,7 @@ body {
   line-height: 1.8;
 }
 
-/* ── HERO ── */
+/* HERO */
 .hero {
   min-height: 100vh;
   display: flex;
@@ -22,9 +19,7 @@ body {
   padding: 2rem;
   border-bottom: 1px solid rgba(200,160,60,0.2);
 }
-
 .hero-content { max-width: 640px; }
-
 .hero .label {
   font-family: 'Cinzel', serif;
   font-size: 0.65rem;
@@ -33,7 +28,6 @@ body {
   color: #c8a03c;
   margin-bottom: 1.5rem;
 }
-
 .hero h1 {
   font-family: 'Cinzel', serif;
   font-size: clamp(4rem, 12vw, 9rem);
@@ -41,16 +35,13 @@ body {
   line-height: 1;
   color: #f0ead8;
   margin-bottom: 1rem;
-  letter-spacing: 0.02em;
 }
-
 .hero .subtitle {
   font-style: italic;
   font-size: 1.1rem;
   color: #b0a080;
   margin-bottom: 2.5rem;
 }
-
 .btn-scroll {
   display: inline-block;
   font-family: 'Cinzel', serif;
@@ -65,12 +56,12 @@ body {
 }
 .btn-scroll:hover { opacity: 0.85; }
 
-/* ── NAV ── */
+/* NAV */
 nav {
   position: sticky;
   top: 0;
   z-index: 99;
-  background: rgba(17,17,17,0.95);
+  background: rgba(17,17,17,0.96);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(200,160,60,0.15);
   display: flex;
@@ -79,7 +70,6 @@ nav {
   gap: 0.25rem;
   padding: 0.75rem 1rem;
 }
-
 nav a {
   font-family: 'Cinzel', serif;
   font-size: 0.65rem;
@@ -92,14 +82,10 @@ nav a {
 }
 nav a:hover { color: #c8a03c; }
 
-/* ── SECTIONS ── */
+/* SECTIONS */
 .section { padding: 5rem 1.5rem; }
-.section.alt { background: rgba(255,255,255,0.02); }
-
-.container {
-  max-width: 860px;
-  margin: 0 auto;
-}
+.section.alt { background: rgba(255,255,255,0.025); }
+.container { max-width: 860px; margin: 0 auto; }
 
 .section-tag {
   display: inline-block;
@@ -110,7 +96,6 @@ nav a:hover { color: #c8a03c; }
   color: #c8a03c;
   margin-bottom: 1rem;
 }
-
 h2 {
   font-family: 'Cinzel', serif;
   font-size: clamp(1.6rem, 4vw, 2.6rem);
@@ -119,19 +104,16 @@ h2 {
   line-height: 1.2;
   margin-bottom: 1.5rem;
 }
-
 .divider {
   width: 80px;
   height: 2px;
   background: linear-gradient(90deg, #c8a03c, transparent);
   margin-bottom: 2rem;
 }
-
 p { color: rgba(240,234,216,0.82); margin-bottom: 1.2rem; }
-
 em { color: #d4af5a; font-style: italic; }
 
-/* ── BLOCKQUOTE ── */
+/* BLOCKQUOTE */
 blockquote {
   border-left: 3px solid #c8a03c;
   margin: 2rem 0;
@@ -153,14 +135,13 @@ blockquote cite {
   font-style: normal;
 }
 
-/* ── CARDS ── */
+/* CARDS */
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1.25rem;
   margin-top: 2rem;
 }
-
 .card {
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(200,160,60,0.18);
@@ -171,10 +152,9 @@ blockquote cite {
   border-color: rgba(200,160,60,0.45);
   transform: translateY(-3px);
 }
-.card-icon { font-size: 1.75rem; margin-bottom: 0.75rem; }
 .card h3 {
   font-family: 'Cinzel', serif;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #d4af5a;
@@ -182,22 +162,19 @@ blockquote cite {
 }
 .card p { font-size: 0.95rem; margin: 0; }
 
-/* ── QUIZ ── */
+/* QUIZ */
 .quiz-intro { margin-bottom: 2rem; }
-
 .quiz-box {
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(200,160,60,0.2);
   padding: 2rem;
 }
-
 .quiz-header {
   display: flex;
   align-items: center;
   gap: 1rem;
   margin-bottom: 1.75rem;
 }
-
 .quiz-header span {
   font-family: 'Cinzel', serif;
   font-size: 0.65rem;
@@ -205,7 +182,6 @@ blockquote cite {
   color: #c8a03c;
   white-space: nowrap;
 }
-
 .progress-bar {
   flex: 1;
   height: 2px;
@@ -217,7 +193,6 @@ blockquote cite {
   background: #c8a03c;
   transition: width 0.4s ease;
 }
-
 .q-num {
   font-family: 'Cinzel', serif;
   font-size: 0.6rem;
@@ -226,7 +201,6 @@ blockquote cite {
   color: #c8a03c;
   margin-bottom: 0.75rem;
 }
-
 .q-text {
   font-size: 1.15rem;
   font-style: italic;
@@ -234,9 +208,7 @@ blockquote cite {
   margin-bottom: 1.5rem;
   line-height: 1.6;
 }
-
 .options { display: grid; gap: 0.6rem; margin-bottom: 1rem; }
-
 .opt {
   background: transparent;
   border: 1px solid rgba(200,160,60,0.22);
@@ -258,7 +230,6 @@ blockquote cite {
 .opt.wrong    { border-color: #9e4040; background: rgba(158,64,64,0.1);  color: #d07070; }
 .opt.show-ok  { border-color: rgba(74,158,80,0.4); color: #7dca7d; }
 .opt:disabled { cursor: default; }
-
 .feedback {
   font-style: italic;
   font-size: 0.95rem;
@@ -268,9 +239,7 @@ blockquote cite {
   padding-left: 0.75rem;
   border-left: 2px solid rgba(200,160,60,0.3);
 }
-
 .quiz-nav { text-align: right; }
-
 .btn-next {
   font-family: 'Cinzel', serif;
   font-size: 0.65rem;
@@ -286,10 +255,9 @@ blockquote cite {
 .btn-next:hover { opacity: 0.85; }
 .btn-next.hidden { display: none; }
 
-/* ── RESULT ── */
+/* RESULT */
 .result { text-align: center; padding: 2rem 1rem; }
 .result.hidden { display: none; }
-
 .result-score {
   font-family: 'Cinzel', serif;
   font-size: 4.5rem;
@@ -298,14 +266,12 @@ blockquote cite {
   line-height: 1;
   margin-bottom: 0.5rem;
 }
-
 .result-msg {
   font-style: italic;
   font-size: 1.1rem;
   color: #c4b99a;
   margin-bottom: 2rem;
 }
-
 .btn-retry {
   font-family: 'Cinzel', serif;
   font-size: 0.65rem;
@@ -320,7 +286,7 @@ blockquote cite {
 }
 .btn-retry:hover { background: rgba(200,160,60,0.08); border-color: #c8a03c; }
 
-/* ── FOOTER ── */
+/* FOOTER */
 footer {
   text-align: center;
   padding: 2.5rem 1rem;
