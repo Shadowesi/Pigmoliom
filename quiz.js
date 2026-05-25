@@ -1,21 +1,21 @@
-const questions = [
+var questions = [
   {
     q: "Melyik ókori szerző örökítette meg leghíresebben a Pygmalion-mítoszt?",
     options: ["Vergilius", "Ovidius", "Homérosz", "Horatius"],
     correct: 1,
-    exp: "Ovidius Metamorphoses (Átváltozások) c. művének X. könyvében olvasható a Pygmalion-történet."
+    exp: "Ovidius Metamorphoses c. művének X. könyvében olvasható a Pygmalion-történet."
   },
   {
     q: "Milyen anyagból faragta Pygmalion a szobrát?",
     options: ["Márványból", "Bronzból", "Elefántcsontból", "Alabástromból"],
     correct: 2,
-    exp: "Pygmalion elefántcsontból (lat. ebur) alkotta meg a szobrot — ez szimbolizálja a tisztaságot és az átváltozást."
+    exp: "Pygmalion elefántcsontból (lat. ebur) alkotta meg a szobrot."
   },
   {
     q: "Melyik istennő keltette életre Pygmalion szobrát?",
     options: ["Artemisz", "Héra", "Aphrodité / Vénusz", "Athéné"],
     correct: 2,
-    exp: "Aphrodité, a szerelem istennője hallgatta meg Pygmalion imáját és keltette életre Galateát."
+    exp: "Aphrodité, a szerelem istennője hallgatta meg Pygmalion imáját."
   },
   {
     q: "Melyik szigethez kapcsolódik a Pygmalion-mítosz?",
@@ -27,28 +27,28 @@ const questions = [
     q: "Mi a neve az életre kelt szobornak a késő antik hagyományban?",
     options: ["Kalüpszó", "Galatea", "Penélopé", "Ariadné"],
     correct: 1,
-    exp: "Ovidius nem adja meg a szobor nevét, de a hagyomány Galateának nevezi — jelentése „tejfehér"."
+    exp: "A hagyomány Galateának nevezi a szobrot — jelentése: tejfehér."
   },
   {
     q: "Melyik könyvben szerepel a Pygmalion-epizód a Metamorphosesben?",
     options: ["V. könyv", "VIII. könyv", "X. könyv", "XII. könyv"],
     correct: 2,
-    exp: "A Pygmalion-történet a Metamorphoses X. könyvében található, amelyet Orpheus mesél el."
+    exp: "A Pygmalion-történet a Metamorphoses X. könyvében található."
   },
   {
-    q: "Ki írta a modern Pygmalion c. színdarabot (1913)?",
+    q: "Ki írta a modern Pygmalion c. színdarabot 1913-ban?",
     options: ["Oscar Wilde", "George Bernard Shaw", "Henrik Ibsen", "Anton Csehov"],
     correct: 1,
-    exp: "George Bernard Shaw 1913-ban írta Pygmalion c. darabját, amelyben Higgins professzor neveli Eliza Doolittle-t."
+    exp: "George Bernard Shaw írta a Pygmalion c. darabot, amelyben Higgins professzor neveli Elizát."
   },
   {
-    q: "Melyik Oscar-díjas musicalfilm alapja Shaw Pygmalion c. darabja?",
+    q: "Melyik musicalfilm alapja Shaw Pygmalion c. darabja?",
     options: ["Cabaret", "My Fair Lady", "West Side Story", "An American in Paris"],
     correct: 1,
-    exp: "My Fair Lady (1964) Audrey Hepburn főszereplésével — Shaw darabjának adaptációja, 8 Oscar-díjjal."
+    exp: "My Fair Lady (1964) Audrey Hepburn főszereplésével — 8 Oscar-díjat nyert."
   },
   {
-    q: "Mi a „Pygmalion-effektus" a pszichológiában?",
+    q: "Mi a Pygmalion-effektus a pszichológiában?",
     options: [
       "Valaki saját tükörképébe szeret bele",
       "A pozitív elvárások javítják a teljesítményt",
@@ -56,87 +56,115 @@ const questions = [
       "A tökéletes társ utáni vágyakozás"
     ],
     correct: 1,
-    exp: "A Pygmalion-effektus: a pozitív elvárások (pl. tanár → diák) valóban javítják az eredményt."
+    exp: "A Pygmalion-effektus: a pozitív elvárások (pl. tanár a diák felé) valóban javítják az eredményt."
   },
   {
-    q: "Ki az utóda Pygmalionnak és Galateának a mítosz szerint?",
+    q: "Ki Pygmalion és Galatea gyermeke a mítosz szerint?",
     options: ["Adónisz", "Erósz", "Paphos", "Küprisz"],
     correct: 2,
-    exp: "Paphos — akinek neve Ciprus egyik legfontosabb városának névadója — Pygmalion és Galatea gyermeke."
+    exp: "Paphos — akinek neve Ciprus egyik városának névadója — Pygmalion és Galatea gyermeke."
   }
 ];
 
-let current = 0;
-let score = 0;
-let answered = false;
+var current = 0;
+var score = 0;
+var answered = false;
 
 function render() {
-  const q = questions[current];
-  document.getElementById('q-counter').textContent = `${current + 1} / 10`;
-  document.getElementById('q-num').textContent = `${current + 1}. kérdés`;
-  document.getElementById('q-text').textContent = q.q;
-  document.getElementById('q-bar').style.width = `${(current + 1) * 10}%`;
-  document.getElementById('q-feedback').textContent = '';
-  document.getElementById('btn-next').classList.add('hidden');
+  var q = questions[current];
+  var qCounter = document.getElementById('q-counter');
+  var qNum = document.getElementById('q-num');
+  var qText = document.getElementById('q-text');
+  var qBar = document.getElementById('q-bar');
+  var qFeedback = document.getElementById('q-feedback');
+  var btnNext = document.getElementById('btn-next');
+
+  if (qCounter) qCounter.textContent = (current + 1) + ' / 10';
+  if (qNum) qNum.textContent = (current + 1) + '. kérdés';
+  if (qText) qText.textContent = q.q;
+  if (qBar) qBar.style.width = ((current + 1) * 10) + '%';
+  if (qFeedback) {
+    qFeedback.textContent = '';
+    qFeedback.style.color = '#a09070';
+  }
+  if (btnNext) btnNext.classList.add('hidden');
   answered = false;
 
-  const optsEl = document.getElementById('q-options');
-  optsEl.innerHTML = '';
-  q.options.forEach((opt, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'opt';
-    btn.textContent = opt;
-    btn.onclick = () => pick(i);
-    optsEl.appendChild(btn);
-  });
+  var optsEl = document.getElementById('q-options');
+  if (optsEl) {
+    optsEl.innerHTML = '';
+    for (var i = 0; i < q.options.length; i++) {
+      var btn = document.createElement('button');
+      btn.className = 'opt';
+      btn.textContent = q.options[i];
+      btn.setAttribute('data-idx', i);
+      btn.onclick = handleClick;
+      optsEl.appendChild(btn);
+    }
+  }
 }
 
-function pick(idx) {
+function handleClick(e) {
   if (answered) return;
   answered = true;
-  const q = questions[current];
-  const btns = document.querySelectorAll('.opt');
+  var idx = parseInt(e.currentTarget.getAttribute('data-idx'));
+  var q = questions[current];
+  var btns = document.querySelectorAll('.opt');
 
-  btns.forEach((b, i) => {
-    b.disabled = true;
-    if (i === q.correct) b.classList.add('show-ok');
-  });
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].disabled = true;
+    if (i === q.correct) btns[i].classList.add('show-ok');
+  }
 
-  const fb = document.getElementById('q-feedback');
+  var fb = document.getElementById('q-feedback');
   if (idx === q.correct) {
     btns[idx].classList.remove('show-ok');
     btns[idx].classList.add('correct');
     score++;
-    document.getElementById('q-score').textContent = `✦ ${score}`;
-    fb.style.color = '#7dca7d';
-    fb.textContent = '✓ Helyes! — ' + q.exp;
+    var qScore = document.getElementById('q-score');
+    if (qScore) qScore.textContent = score + ' pont';
+    if (fb) {
+      fb.style.color = '#7dca7d';
+      fb.textContent = 'Helyes! — ' + q.exp;
+    }
   } else {
     btns[idx].classList.add('wrong');
-    fb.style.color = '#d07070';
-    fb.textContent = '✗ Nem jó. — ' + q.exp;
+    if (fb) {
+      fb.style.color = '#d07070';
+      fb.textContent = 'Nem jó. — ' + q.exp;
+    }
   }
 
-  const btn = document.getElementById('btn-next');
-  btn.classList.remove('hidden');
-  btn.textContent = current < 9 ? 'Következő →' : 'Eredmény →';
+  var btn = document.getElementById('btn-next');
+  if (btn) {
+    btn.classList.remove('hidden');
+    btn.textContent = current < 9 ? 'Következő →' : 'Eredmény →';
+  }
 }
 
-document.getElementById('btn-next').addEventListener('click', () => {
-  current++;
-  if (current < questions.length) {
-    render();
-  } else {
-    showResult();
-  }
-});
+var btnNext = document.getElementById('btn-next');
+if (btnNext) {
+  btnNext.onclick = function() {
+    current++;
+    if (current < questions.length) {
+      render();
+    } else {
+      showResult();
+    }
+  };
+}
 
 function showResult() {
-  document.getElementById('quiz-ui').style.display = 'none';
-  const r = document.getElementById('quiz-result');
-  r.classList.remove('hidden');
-  document.getElementById('final-score').textContent = `${score}/10`;
+  var quizUi = document.getElementById('quiz-ui');
+  var quizResult = document.getElementById('quiz-result');
+  var finalScore = document.getElementById('final-score');
+  var resultMsg = document.getElementById('result-msg');
 
-  const msgs = [
+  if (quizUi) quizUi.style.display = 'none';
+  if (quizResult) quizResult.classList.remove('hidden');
+  if (finalScore) finalScore.textContent = score + '/10';
+
+  var msgs = [
     [0, 3, "A márványszobor még nem árulta el titkait... Próbáld újra!"],
     [4, 5, "Jó kezdet! Pygmalion szeretné, ha mélyebbre ásnál."],
     [6, 7, "Szép teljesítmény — a szobor formát ölt kezeid közt!"],
@@ -144,19 +172,26 @@ function showResult() {
     [10, 10, "Tökéletes! Galatea is büszke lenne rád!"]
   ];
 
-  let msg = msgs[0][2];
-  for (const [lo, hi, text] of msgs) {
-    if (score >= lo && score <= hi) { msg = text; break; }
+  var msg = msgs[0][2];
+  for (var i = 0; i < msgs.length; i++) {
+    if (score >= msgs[i][0] && score <= msgs[i][1]) { msg = msgs[i][2]; break; }
   }
-  document.getElementById('result-msg').textContent = msg;
+  if (resultMsg) resultMsg.textContent = msg;
 }
 
 function restartQuiz() {
   current = 0; score = 0; answered = false;
-  document.getElementById('q-score').textContent = '✦ 0';
-  document.getElementById('quiz-ui').style.display = 'block';
-  document.getElementById('quiz-result').classList.add('hidden');
+  var qScore = document.getElementById('q-score');
+  var quizUi = document.getElementById('quiz-ui');
+  var quizResult = document.getElementById('quiz-result');
+
+  if (qScore) qScore.textContent = '0 pont';
+  if (quizUi) quizUi.style.display = 'block';
+  if (quizResult) quizResult.classList.add('hidden');
   render();
 }
 
-render();
+// Запуск при завантаженні сторінки
+window.onload = function() {
+  render();
+};
